@@ -25,3 +25,32 @@
 .formulate-input[data-classification='text'] input:focus {
   border: 1px solid var(--color-main);
 }
+
+.formulate-input[data-classification='group'] [data-is-repeatable] {
+  border: 1px solid var(--color-main);
+}
+
+.formulate-input[data-classification='group']
+  [data-is-repeatable]
+  .formulate-input-group-repeatable {
+  border-bottom: 1px solid var(--color-main);
+}
+
+.formulate-input {
+  margin-bottom: 0px;
+}
+
+.formulate-input[data-classification='group']
+  [data-is-repeatable]
+  .formulate-input-group-repeatable-remove {
+  background: var(--background-color);
+}
+
+.formulate-input[data-classification='button'] button[data-ghost] {
+  color: var(--text-color);
+}
+
+.formulate-input[data-classification='button'] button:active {
+  background-color: var(--color-main);
+  border-color: var(--color-main);
+}

@@ -29,9 +29,9 @@ export default Vue.extend({
   mounted() {
     this.$database.onCreated((type, data) => {
       if (type === 'success') {
-        this.$store.commit('MUDAR_CARREGANDO', false)
+        this.$store.commit('SET_CARREGANDO', false)
       } else {
-        this.$store.commit('MUDAR_ERRO', data)
+        this.$store.commit('SET_ERRO', data)
       }
     })
   },

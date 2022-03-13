@@ -1,6 +1,6 @@
 <template>
   <div v-if="lista !== null" class="card_list_container">
-    <DesafioCard v-for="card in lista" :key="card.id" :card="card" />
+    <DesafioCard v-for="card in lista" :key="card.data.id" :card="card" />
   </div>
   <div v-else>
     <div>Carregando...</div>
@@ -9,17 +9,17 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { IList } from '~/types/lista'
+import { IGetTodos } from '~/utils/database'
 
 export default Vue.extend({
   name: 'CardList',
   data() {
     return {
-      lista: null as IList[] | null,
+      lista: null as IGetTodos[] | null,
     }
   },
   async fetch() {
-    this.lista = await this.$database.getLista()
+    this.lista = await this.$database.getTodos()
   },
   fetchOnServer: false,
 })

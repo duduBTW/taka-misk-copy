@@ -2,9 +2,16 @@ import { openDB, IDBPDatabase } from 'idb'
 import { v4 as uuidv4 } from 'uuid'
 
 import { NomeTabelas, IList } from '~/types/lista'
+import { ITabela } from '~/types/tabela'
 
 type Status = 'success' | 'error'
 type Listener = (status: Status, data?: any) => void
+
+export interface IGetTodos {
+  titulo: string
+  data: ITabela | IList
+  tipo: NomeTabelas
+}
 
 class Database {
   private DATABASE: string
@@ -13,7 +20,6 @@ class Database {
 
   constructor(database: string) {
     this.DATABASE = database
-
     this.criarTabelas(['lista', 'tabela'])
   }
 
@@ -48,6 +54,40 @@ class Database {
 
   public onCreated(listener: Listener) {
     this.createdListeners.push(listener)
+  }
+
+  private async getGenerico<T>(tabela: NomeTabelas): Promise<T[]> {
+    if (this.db) {
+      const tx = this.db.transaction(tabela, 'readonly')
+      const store = tx.objectStore(tabela)
+      return await store.getAll()
+    }
+
+    return []
+  }
+
+  public async getTodos(): Promise<IGetTodos[]> {
+    if (this.db) {
+      const tabela = (await this.getGenerico<ITabela>('tabela')).map(
+        (tabela): IGetTodos => ({
+          titulo: tabela.perguntas.map((t) => t.titulo).join(', '),
+          data: tabela,
+          tipo: 'tabela',
+        })
+      )
+
+      const lista = (await this.getGenerico<IList>('lista')).map(
+        (lista): IGetTodos => ({
+          titulo: lista.titulo,
+          data: lista,
+          tipo: 'lista',
+        })
+      )
+
+      return [...lista, ...tabela]
+    }
+
+    return []
   }
 
   public async adicionarValor(tabela: NomeTabelas, valor: object) {
@@ -86,6 +126,28 @@ class Database {
     if (this.db) {
       const tx = this.db.transaction('lista', 'readonly')
       const store = tx.objectStore('lista')
+      const result = await store.get(id)
+
+      return result
+    }
+
+    return null
+  }
+
+  public async adicionarTabela(valor: ITabela) {
+    if (this.db) {
+      const tx = this.db.transaction('tabela', 'readwrite')
+      const store = tx.objectStore('tabela')
+
+      const result = await store.put({ ...valor, id: uuidv4() })
+      return result
+    }
+  }
+
+  public async getItemTabela(id: string) {
+    if (this.db) {
+      const tx = this.db.transaction('tabela', 'readonly')
+      const store = tx.objectStore('tabela')
       const result = await store.get(id)
 
       return result

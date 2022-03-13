@@ -4,8 +4,8 @@
       <NuxtLink to="/">Voltar</NuxtLink>
       <h1>Criar</h1>
     </div>
-    <FormulateInput label="Titulo" name="titulo" type="textarea" />
-    <FormulateInput v-for="input in inputs" :key="input" :label="`Valor ${input}`" :name="`valor-${input}`" type="text" />
+    <FormulateInput label="Titulo" name="titulo" type="textarea" class="input" />
+    <FormulateInput v-for="input in inputs" :key="input" :label="`Valor ${input}`" :name="`valor-${input}`" type="text" class="input" />
 
     <TBotao type="submit" class="criar">Criar card</TBotao>
   </FormulateForm>
@@ -43,6 +43,10 @@ export default Vue.extend({
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-column-gap: 20px;
+
+  & .input {
+    margin-bottom: 24px;
+  }
 
   & .formulate-input[data-classification='textarea'] {
     grid-column: 1 / span 3;

@@ -1,5 +1,5 @@
 <template>
-  <button :type="type" class="t_botao" @click="$emit('onClick', $event)">
+  <button :type="type" :class="[{'full-w': fullWidth}, 't_botao']" @click="$emit('onClick', $event)">
     <slot />
   </button>
 </template>
@@ -15,6 +15,11 @@ export default Vue.extend({
       required: false,
       default: 'button',
     },
+    fullWidth: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   emits: ['onClick'],
 })
@@ -25,6 +30,10 @@ export default Vue.extend({
   cursor: pointer;
 
   width: 176px;
+  &.full-w {
+    width: 100%;
+    background-size: 100%;
+  }
   padding: 8px 0px;
 
   font-style: normal;

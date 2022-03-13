@@ -1,12 +1,12 @@
 <template>
-  <NuxtLink :to="`/lista/${card.id}`" class="desafio_card">
+  <NuxtLink :to="`/${card.tipo}/${card.data.id}`" class="desafio_card">
     {{ card.titulo }}
   </NuxtLink>
 </template>
 
 <script lang="ts">
 import Vue, { PropOptions } from 'vue'
-import { IList } from '~/types/lista'
+import { IGetTodos } from '~/utils/database'
 
 export default Vue.extend({
   name: 'TBotao',
@@ -14,7 +14,7 @@ export default Vue.extend({
     card: {
       type: Object,
       required: true,
-    } as PropOptions<IList>,
+    } as PropOptions<IGetTodos>,
   },
 })
 </script>

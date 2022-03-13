@@ -2,7 +2,7 @@
   <div class="lista_container">
     <h1 v-if="lista !== null">{{ lista.titulo }}</h1>
     <template v-if="valores !== null">
-      <div v-for="campo in valores" :key="campo" class="item">{{ campo }}</div>
+      <TextoEscondido v-for="(campo, index) in valores" :key="campo + index" :texto="campo" :mostrar="mostrar.includes(index)" class="item" @onClick="mostrar.push(index)" />
     </template>
     <template v-else>
       <div>
@@ -21,6 +21,7 @@ export default Vue.extend({
   data() {
     return {
       lista: null as IListCompleta | null,
+      mostrar: [],
     }
   },
   async fetch() {
@@ -36,10 +37,7 @@ export default Vue.extend({
       delete lista.titulo
       delete lista.id
 
-      const campos = [...Object.values(lista)]
-      campos.shift()
-
-      return campos
+      return Object.values(lista)
     },
   },
 })
@@ -47,7 +45,7 @@ export default Vue.extend({
  
 <style lang="scss" scoped>
 .lista_container {
-  padding: 120px 120px;
+  padding: 120px;
 
   display: grid;
   grid-column-gap: 100px;
@@ -56,16 +54,6 @@ export default Vue.extend({
 
   & h1 {
     grid-area: 1 / span 3;
-  }
-
-  & .item {
-    font-style: normal;
-    font-weight: 900;
-    font-size: 48px;
-    line-height: 56px;
-
-    color: var(--text-primary);
-    cursor: pointer;
   }
 }
 </style>

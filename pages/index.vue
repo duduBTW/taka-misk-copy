@@ -1,6 +1,6 @@
 <template>
   <div class="inicio_container">
-    <TBotao class="criar" @onClick="criar">Criar card</TBotao>
+    <TCriar />
     <CardList />
   </div>
 </template>
@@ -10,20 +10,6 @@ import Vue from 'vue'
 
 export default Vue.extend({
   name: 'TelaInicio',
-  data() {
-    return {
-      cards: [
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, nobis.',
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, nobis.',
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, nobis.',
-      ],
-    }
-  },
-  methods: {
-    criar() {
-      this.$router.push('/lista/criar')
-    },
-  },
 })
 </script>
 
@@ -34,11 +20,5 @@ export default Vue.extend({
   display: grid;
   grid-template-rows: auto auto;
   gap: 60px;
-
-  & button {
-    &.criar {
-      justify-self: flex-end;
-    }
-  }
 }
 </style>
