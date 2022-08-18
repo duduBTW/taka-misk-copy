@@ -1,25 +1,23 @@
 <template>
-  <div>
-    <div v-if="tabela" class="tabela_result_container">
-      <div v-for="(pergunta) in tabela.perguntas" :key="pergunta.titulo" class="item">
-        <p>{{pergunta.titulo}}</p>
-        <div class="perguntas">
-          <div v-for="resposta in pergunta.respostas" :key="resposta.valor" class="resposta">
-            <div class="pontos">{{ resposta.pontos }}</div>
-            <div>{{ resposta.valor }}</div>
-          </div>
+  <div v-if="tabela" class="tabela_result_container">
+    <div v-for="(pergunta) in tabela.perguntas" :key="pergunta.titulo" class="item">
+      <p>{{pergunta.titulo}}</p>
+      <div class="perguntas">
+        <div v-for="resposta in pergunta.respostas" :key="resposta.valor" class="resposta">
+          <div class="pontos">{{ resposta.pontos }}</div>
+          <div>{{ resposta.valor }}</div>
         </div>
       </div>
     </div>
-    <div v-else>
-      Carregando...
-    </div>
+  </div>
+  <div v-else>
+    Carregando...
   </div>
 </template>
 
 <script>
 export default {
-  name: 'TelaTabelaMostrar',
+  name: 'TableResult',
   data() {
     return {
       tabela: null,
@@ -33,16 +31,18 @@ export default {
 
 <style lang="scss" scoped>
 .tabela_result_container {
-  padding: 120px;
+  padding: 0px 120px;
   display: grid;
   grid-column-gap: 100px;
   grid-row-gap: 60px;
   grid-template-columns: repeat(2, 1fr);
+  color: black;
+  font-size: 24px;
 
   .item {
     padding: 24px;
     border-radius: 12px;
-    border: 1px solid var(--color-main);
+    border: 1px solid black;
 
     display: flex;
     flex-direction: column;
@@ -55,7 +55,6 @@ export default {
   }
 
   .pontos {
-    color: var(--text-primary);
     font-weight: bold;
     letter-spacing: 2px;
   }

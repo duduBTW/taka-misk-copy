@@ -1,24 +1,32 @@
 <template>
-  <div v-if="tabela" class="tabela_container">
-    <div v-for="(pergunta, index) in tabela.perguntas" :key="pergunta.titulo" class="item">
-      <p>{{pergunta.titulo}}</p>
-      <div class="perguntas">
-        <h2 v-if="resu[index]" class="pontos">
-          {{ resu[index] }}
-        </h2>
-        <input name="resposta" type="text" @keyup.ctrl.enter="(e) => mostrarResposta(index, e)" />
+  <div>
+    <NuxtLink to="/">Voltar</NuxtLink>
+    <div v-if="tabela" class="tabela_container">
+      <div v-for="(pergunta, index) in tabela.perguntas" :key="pergunta.titulo" class="item">
+        <p>{{pergunta.titulo}}</p>
+        <div class="perguntas">
+          <h2 v-if="resu[index]" class="pontos">
+            {{ resu[index] }}
+          </h2>
+          <input name="resposta" type="text" @keyup.ctrl.enter="(e) => mostrarResposta(index, e)" />
+        </div>
       </div>
+      <h1 v-if="total">Total {{ total }}</h1>
     </div>
-    <h1 v-if="total">Total {{ total }}</h1>
-  </div>
-  <div v-else>
-    Carregando...
+    <div v-else>
+      Carregando...
+    </div>
+    <TableResult />
+
   </div>
 </template>
 
 <script >
+import TableResult from '~/components/TableResult.vue'
+
 export default {
   name: 'TelaTabela',
+  components: { TableResult },
   data() {
     return {
       tabela: null,

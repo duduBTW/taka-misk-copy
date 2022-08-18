@@ -1,23 +1,29 @@
 <template>
-  <div class="lista_container">
-    <h1 v-if="lista !== null">{{ lista.titulo }}</h1>
-    <template v-if="valores !== null">
-      <TextoEscondido v-for="(campo, index) in valores" :key="campo + index" :texto="campo" :mostrar="mostrar.includes(index)" class="item" @onClick="mostrar.push(index)" />
-    </template>
-    <template v-else>
-      <div>
-        Carregando...
-      </div>
-    </template>
+  <div>
+    <NuxtLink to="/">Voltar</NuxtLink>
+    <div class="lista_container">
+      <h1 v-if="lista !== null">{{ lista.titulo }}</h1>
+      <template v-if="valores !== null">
+        <TextoEscondido v-for="(campo, index) in valores" :key="campo + index" :texto="campo" :mostrar="mostrar.includes(index)" class="item" @onClick="mostrar.push(index)" />
+      </template>
+      <template v-else>
+        <div>
+          Carregando...
+        </div>
+      </template>
+    </div>
+    <ListaResult />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import { IListCompleta } from '~/types/lista'
+import ListaResult from '~/components/ListaResult.vue'
 
 export default Vue.extend({
   name: 'TelaLista',
+  components: { ListaResult },
   data() {
     return {
       lista: null as IListCompleta | null,
@@ -30,13 +36,11 @@ export default Vue.extend({
   computed: {
     valores() {
       if (this.lista === null) return null
-
       const lista: Partial<IListCompleta> = {
         ...(this.$data.lista as IListCompleta),
       }
       delete lista.titulo
       delete lista.id
-
       return Object.values(lista)
     },
   },
